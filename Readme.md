@@ -8,14 +8,12 @@ oc apply -f nginx-deployment.yaml
 
 ## Spin up http client pod
 
-Currently nginx server image includes 1K, 10K, 1M replace 1K object size to any size you need `curl ${NGINX_PODIP}:8080/1K` in `web-client.yaml`. Feel free to reach out if you need other sizes of objects.
+Currently nginx server image includes 1K, 10K, 100K and 1M. In `web-client.yaml` replace 1K object size to any size you need at `curl ${NGINX_PODIP}:8080/1K` . Feel free to reach out if you need other sizes of objects.
+
 Update client with nginx service IP
 
 ```bash
 export NGINX_PODIP=$(oc get pods -o jsonpath='{.items[*].status.podIP}')
-```
-
-```bash
 envsubst < web-client.yaml > /tmp/web-client.yaml
 oc apply -f /tmp/web-client.yaml
 ```
