@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: bbx4
+  name: bbx4
+spec:
+  containers:
+  - command:
+      - sh
+      - -c
+      - "
+        \  while : ; do\n
+        \        curl nginx-service.test.svc:80/data/100K  2>&1 >  /dev/null ; sleep 1 \n
+        \  done"
+    image: quay.io/openshifttest/hello-openshift:multiarch
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ["ALL"]
+        privileged: false
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    name: bbx4
+    resources: {}
+status: {}
